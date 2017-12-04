@@ -9,7 +9,7 @@ export default function HomePage() {
       <div className="row">
         <div className="col-sm-12 col-md-8">
           <p>
-            Please log-in to view/manager your projects.
+            Please log-in to view/manage your projects.
           </p>
         </div>
       </div>

@@ -2,15 +2,15 @@ const express = require('express');
 
 const router = express.Router();
 
-const User = require('../../models/user');
+const Project = require('../../models/project');
 
-/* GET users list. */
+/* GET projects list. */
 router.get('/list', (req, res, next) => {
-  User.find((err, users) => {
+  Project.find((err, projects) => {
     if (err) {
       return res.send(err);
     }
-    return res.json(users);
+    return res.json(projects);
   });
 });
 
