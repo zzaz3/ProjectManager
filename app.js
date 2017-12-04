@@ -12,6 +12,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const index = require('./routes/index');
 const api = require('./routes/api/index');
 const users = require('./routes/api/users');
+const authentication = require('./routes/api/authentication');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -23,6 +24,7 @@ const app = express();
 
 // Connect Mongoose
 mongoose.connect('mongodb://localhost/project_manager');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,8 +60,8 @@ app.use(webpackHotMiddleware(webpackCompiler, {
 }));
 
 app.use('/api', api);
-app.use('/users', users);
-
+app.use('/api/users', users);
+app.use('/api/authentication', authentication);
 app.use('/*', index);
 
 // Configure Passport

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'reactstrap';
 
 import Sidebar from '../shared/Sidebar'
 export default function HomePage() {
@@ -10,14 +9,9 @@ export default function HomePage() {
       <div className="row">
         <div className="col-sm-12 col-md-8">
           <p>
-            This is the homepage~
+            Please log-in to view/manager your projects.
           </p>
-          <p>
-            Here's a button:
-          </p>
-          <Button onClick={showAlert}>Click Me</Button>
         </div>
-        <Sidebar />
       </div>
   );
 }
