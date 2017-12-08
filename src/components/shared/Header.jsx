@@ -23,7 +23,7 @@ export default class Header extends React.Component {
         <header className="wrapper">
           <Navbar color="faded" light toggleable>
             <NavbarToggler right onClick={this.toggleNavbar} />
-            <NavbarBrand tag={Link} to="/">ProjectManager</NavbarBrand>
+            <NavbarBrand tag={Link} to="/">ProjectManager {this.props.progress}</NavbarBrand>
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavLink tag={Link} to="/account/projects">View Projects</NavLink>

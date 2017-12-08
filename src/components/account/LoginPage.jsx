@@ -4,6 +4,29 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 export default class LoginPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.compileFormData = this.compileFormData.bind(this);
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
+    this.state = {
+      username: '',
+      password: '',
+    };
+  }
+
+  handleUsernameChange(e) {
+    this.setState({ username: e.target.value });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
+  }
+
+  compileFormData() {
+    const { loginFunction } = this.props;
+    const formData = this.state;
+    loginFunction(formData);
   }
 
   render() {
@@ -18,6 +41,8 @@ export default class LoginPage extends React.Component {
                 name="Username"
                 id="exampleUsername"
                 placeholder="username"
+                value={this.state.username}
+                onChange={this.handleUsernameChange}
               />
             </FormGroup>
             <FormGroup>
@@ -27,9 +52,11 @@ export default class LoginPage extends React.Component {
                 name="password"
                 id="examplePassword"
                 placeholder="password"
+                value={this.state.password}
+                onChange={this.handlePasswordChange}
               />
             </FormGroup>
-            <Button>Log In</Button>
+            <Button onClick={this.compileFormData}>Log In</Button>
           </Form>
         </div>
       </div>

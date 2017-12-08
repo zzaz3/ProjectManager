@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Project = new Schema({
-  wwner: String,
+  owner: String,
   name: String,
   description: String,
   team: [String],
