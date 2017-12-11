@@ -2,14 +2,13 @@ import React from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { incrementProgress, decrementProgress, testo } from '../../actions/progress';
+import { incrementProgress, decrementProgress } from '../../actions/progress';
 import HomePage from './HomePage';
 
 export function HomePageContainer(props) {
-  const { incrementProgressAction, decrementProgressAction, testoAction } = props;
+  const { incrementProgressAction, decrementProgressAction } = props;
   return (
     <HomePage
-      testoFunction={testoAction}
       incrementFunction={incrementProgressAction}
       decrementFunction={decrementProgressAction}
     />
@@ -19,7 +18,6 @@ export function HomePageContainer(props) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    testoAction: testo,
     incrementProgressAction: incrementProgress,
     decrementProgressAction: decrementProgress,
   }, dispatch);

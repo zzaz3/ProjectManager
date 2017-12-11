@@ -1,9 +1,11 @@
 import React from 'react';
 import 'whatwg-fetch';
+import { Redirect } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { incrementProgress, decrementProgress } from '../../actions/progress';
+import { loginAttempt, loginSuccess, loginFailure } from '../../actions/authentication';
 
 import LoginPage from './LoginPage';
 
@@ -12,14 +14,25 @@ export class LoginPageContainer extends React.Component {
     super(props);
 
     this.attemptLogIn = this.attemptLogIn.bind(this);
+
+    this.state = {
+      redirect: false,
+    };
   }
 
   async attemptLogIn(userData) {
-    const { decrementProgressAction, incrementProgressAction } = this.props;
+    const { 
+      decrementProgressAction, 
+      incrementProgressAction,
+      loginAttemptAction,
+      loginFailureAction,
+      loginSuccessAction, 
+    } = this.props;
 
     incrementProgressAction();
+    loginAttemptAction();
 
-    const loginResponse = await fetch(
+    await fetch(
       '/api/authentication/login',
       {
         method: 'POST',
@@ -29,14 +42,37 @@ export class LoginPageContainer extends React.Component {
         },
         credentials: 'same-origin',
       },
-    );
-
-    console.log(loginResponse);
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      return null;
+    })
+    .then((json) => {
+      if (json) {
+        loginSuccessAction(json);
+        this.setState({ redirect: true });
+      } else {
+        loginFailureAction(new Error('Authentication Failed'));
+      }
+    })
+    .catch((error) => {
+      loginFailureAction(new Error(error));
+    });
 
     decrementProgressAction();
   }
 
   render() {
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return (
+        <Redirect to="/" />
+      );
+    }
+
     return (
       <div>
         <LoginPage loginFunction={this.attemptLogIn} />
@@ -49,6 +85,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     incrementProgressAction: incrementProgress,
     decrementProgressAction: decrementProgress,
+    loginAttemptAction: loginAttempt,
+    loginFailureAction: loginFailure,
+    loginSuccessAction: loginSuccess,
   }, dispatch);
 }
 

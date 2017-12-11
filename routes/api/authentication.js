@@ -4,6 +4,21 @@ const User = require('../../models/user.js');
 
 const router = express.Router();
 
+// GET to /checksession
+
+router.get('/checksession', (req, res) => {
+  if (req.user) {
+    return res.send(JSON.stringify(req.user));
+  }
+  return res.send(JSON.stringify({}));
+});
+
+// GET to /logout
+router.get('/logout', (req, res) => {
+  req.logout();
+  return res.send(JSON.stringify(req.user));
+});
+
 // POST to /register
 router.post('/register', (req, res) => {
   // Create a new user object from the req's JSON.
@@ -32,12 +47,6 @@ router.post('/login', (req, res) => {
 
     return res.send(JSON.stringify({ error: 'There was an issue logging in. Try again.' }));
   });
-});
-
-// GET to /logout
-router.get('/logout', (req, res) => {
-  req.logout();
-  return res.send(JSON.stringify(req.user));
 });
 
 module.exports = router;

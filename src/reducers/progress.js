@@ -11,8 +11,5 @@ export default function reducer(state = initialState, action) {
     case 'DECREMENT_PROGRESS': {
       return Math.max(state - 1, 0);
     }
-    case 'TESTO': {
-      return 'hello?';
-    }
   }
 }

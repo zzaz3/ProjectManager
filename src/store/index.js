@@ -3,9 +3,11 @@ import { logger } from 'redux-logger';
 
 import DevTools from '../components/shared/DevTools';
 import ProgressReducer from '../reducers/progress';
+import AuthenticationReducer from '../reducers/authentication';
 
 const combinedReducers = combineReducers({
   progress: ProgressReducer,
+  authentication: AuthenticationReducer,
 });
 
 const enhancer = compose(

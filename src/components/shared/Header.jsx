@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
+const renderProjectsPage = id => <NavLink tag={Link} to="/account/projects/id">View Projects</NavLink>;
+const renderLogin = () => <NavLink tag={Link} to="/account/login">Log In</NavLink>;
+const renderLogout = () => <NavLink tag={Link} to="/account/api/authentication/logout">Log Out</NavLink>;
+
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +23,8 @@ export default class Header extends React.Component {
   }
 
   render() {
+    const { isLoggedIn, firstName } = this.props.authentication;
+
     return (
         <header className="wrapper">
           <Navbar color="faded" light toggleable>
@@ -26,8 +32,8 @@ export default class Header extends React.Component {
             <NavbarBrand tag={Link} to="/">ProjectManager {this.props.progress}</NavbarBrand>
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavLink tag={Link} to="/account/projects">View Projects</NavLink>
-                <NavLink tag={Link} to="/account/login">Log In</NavLink>
+                { isLoggedIn ? renderProjectsPage() : '' }
+                { isLoggedIn ? renderLogout()  : renderLogin() }
               </Nav>
             </Collapse>
           </Navbar>
